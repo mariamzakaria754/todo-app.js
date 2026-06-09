@@ -5,7 +5,8 @@
   "source": "index.js",
   "scripts": {
     "start": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "author": "",
   "license": "ISC",

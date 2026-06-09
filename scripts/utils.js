@@ -1,6 +1,11 @@
 import { appElement, taskListElement, inputElement } from "./elements";
 import { initTaskListeners } from "./eventListeners";
 
+// ✅ الصور (Vite safe imports)
+import emptyIcon from "../assets/icon-empty.svg";
+import checkmark from "../assets/icon-checkmark.svg";
+import basketIcon from "../assets/icon-basket.svg";
+
 export const fetchData = (key) => {
   const data = localStorage.getItem(key);
   return data ? JSON.parse(data) : false;
@@ -15,20 +20,25 @@ export const renderTaskList = (tasks) => {
   let taskList = "";
 
   tasks.forEach((task) => {
-    taskList += `<li class="TaskList__taskContent${task.isCompleted ? " TaskList__taskContent--isActive" : ""}">
-      <div class='TaskList__checkbox' tabindex="0" role="button">
-        <img class='.TaskList__checkboxImage' src="./assets/icon-checkmark.svg" alt="checkmark" />
-      </div>
-      <div class='TaskList__valueContent'>
-        <p class='TaskList__value'>
-          ${task.value}
-        </p>
-        <img src="./assets/icon-basket.svg"
-             class='TaskList__deleteIcon'
-             alt="basket-icon"
-        />
-      </div>
-    </li>`;
+    taskList += `
+      <li class="TaskList__taskContent${task.isCompleted ? " TaskList__taskContent--isActive" : ""}">
+        <div class="TaskList__checkbox" tabindex="0" role="button">
+          <img class="TaskList__checkboxImage" src="${checkmark}" alt="checkmark" />
+        </div>
+
+        <div class="TaskList__valueContent">
+          <p class="TaskList__value">
+            ${task.value}
+          </p>
+
+          <img
+            src="${basketIcon}"
+            class="TaskList__deleteIcon"
+            alt="basket-icon"
+          />
+        </div>
+      </li>
+    `;
   });
 
   taskListElement.innerHTML = taskList;
@@ -73,14 +83,11 @@ export const initDataOnStartup = () => {
 
 export const renderEmptyState = () => {
   taskListElement.innerHTML = `
-  <li class="EmptyList">
-<img
-    class="EmptyList__img"
-    src="./assets/icon-empty.svg"
-    alt="list is empty"
-  />
-  <p> قائمة المهام الفارغة </p>
-  </li>`;
+    <li class="EmptyList">
+      <img class="EmptyList__img" src="${emptyIcon}" alt="list is empty" />
+      <p>قائمة المهام فارغة</p>
+    </li>
+  `;
 };
 
 // NOTE Decision Maker;
